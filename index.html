@@ -60,7 +60,7 @@ var geojson = {
         "type": "Feature",
         "geometry": {
             "type": "Point",
-            "coordinates": [52.693,20.586]
+            "coordinates": [57.104,14.8]
         }
     }]
 };
@@ -149,7 +149,7 @@ map.on('load', function () {
           map.on('mousedown', mouseDown);
 
 
-	
+
 
 map.addLayer({
         "id": "points",
@@ -162,10 +162,10 @@ map.addLayer({
                     "type": "Feature",
                     "geometry": {
                         "type": "Point",
-                        "coordinates": [79.0051377777458,35.43889155599902]
+                        "coordinates": [61,15]
                     },
                     "properties": {
-                        "title": "Afghanistan",
+                        "title": "X",
                         "icon": "none"
                     }
                 }]
@@ -179,15 +179,15 @@ map.addLayer({
             "text-anchor": "top"
         }
     });
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
+
+
+
+
+
+
+
+
 // When a click event occurs on a feature in the places layer, open a popup at the
 // location of the feature, with description HTML from its properties.
 map.on('click', 'places', function (e) {
