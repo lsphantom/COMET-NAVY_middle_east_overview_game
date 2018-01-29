@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>NAVY - OVERVIEW OF THE MIDDLE EAST</title>
+<meta charset="UTF-8">
+
+<script src="mapbox/mapbox-gl.js"></script>
+<link href="mapbox/mapbox-gl.css" rel="stylesheet" />
+<style>
+.mapboxgl-ctrl.mapboxgl-ctrl-attrib {
+    font-size: 9px;
+}
+</style>
+<script src="custom.js" type="module"></script>
+
+</head>
+
+<body>
+<!--<h1>Navy - Overview of the Middle East G0</h1>
+-->
+
+<div id="map" style="width: 900px; height: 890px;"></div>
+<pre id="coordinates" class="coordinates"></pre>
+<script>
+mapboxgl.accessToken = 'pk.eyJ1IjoibHNwaGFudG9tIiwiYSI6IkQzc05DaDgifQ.qWlCVZ6YQgqOVknWIw_d0Q';
+
+
+var bounds = [
+  [26.610,-7.450],//SW
+  [80.318,42.858] //NE
+]
+
+var map = new mapboxgl.Map({
+  container: 'map',
+  style: 'mapbox/Navy-G0/style.json',
+  center: [53.464816, 18.619338], // starting position [lng, lat]
+  zoom: 3.5, // starting zoom
+  minZoom: 1,
+  maxZoom: 5,
+  maxBounds: bounds
+});
+
+
+
+// Holds mousedown state for events. if this
+// flag is active, we move the point on `mousemove`.
+var isDragging;
+
+// Is the cursor over a point? if this
+// flag is active, we listen for a mousedown event.
+var isCursorOverPoint;
+
+var coordinates = document.getElementById('coordinates');
+
+
+var canvas = map.getCanvasContainer();
+var geojson = {
+    "type": "FeatureCollection",
+    "features": [{
+        "type": "Feature",
+        "geometry": {
+            "type": "Point",
+            "coordinates": [52.693,20.586]
+        }
+    }]
+};
+
+
+function mouseDown() {
+    if (!isCursorOverPoint) return;
+
+    isDragging = true;
+
+    // Set a cursor indicator
+    canvas.style.cursor = 'grab';
+
+    // Mouse events
+    map.on('mousemove', onMove);
+    map.once('mouseup', onUp);
+}
+
+function onMove(e) {
+    if (!isDragging) return;
+    var coords = e.lngLat;
+
+    // Set a UI indicator for dragging.
+    canvas.style.cursor = 'grabbing';
+
+    // Update the Point feature in `geojson` coordinates
+    // and call setData to the source layer `point` on it.
+    geojson.features[0].geometry.coordinates = [coords.lng, coords.lat];
+    map.getSource('point').setData(geojson);
+}
+
+function onUp(e) {
+    if (!isDragging) return;
+    var coords = e.lngLat;
+
+    // Print the coordinates of where the point had
+    // finished being dragged to on the map.
+    coordinates.style.display = 'block';
+    coordinates.innerHTML = 'Longitude: ' + coords.lng + '<br />Latitude: ' + coords.lat;
+    canvas.style.cursor = '';
+    isDragging = false;
+
+    // Unbind mouse events
+    map.off('mousemove', onMove);
+}
+
+
+
+
+
+//ON LOAD FUNCTIONS
+map.on('load', function () {
+
+
+  // Add a single point to the map
+      map.addSource('point', {
+          "type": "geojson",
+          "data": geojson
+      });
+
+      map.addLayer({
+          "id": "point",
+          "type": "circle",
+          "source": "point",
+          "paint": {
+              "circle-radius": 10,
+              "circle-color": "#3887be"
+          }
+      });
+
+      // When the cursor enters a feature in the point layer, prepare for dragging.
+          map.on('mouseenter', 'point', function() {
+              map.setPaintProperty('point', 'circle-color', '#3bb2d0');
+              canvas.style.cursor = 'move';
+              isCursorOverPoint = true;
+              map.dragPan.disable();
+          });
+
+          map.on('mouseleave', 'point', function() {
+              map.setPaintProperty('point', 'circle-color', '#3887be');
+              canvas.style.cursor = '';
+              isCursorOverPoint = false;
+              map.dragPan.enable();
+          });
+
+          map.on('mousedown', mouseDown);
+
+
+	
+
+map.addLayer({
+        "id": "points",
+        "type": "symbol",
+        "source": {
+            "type": "geojson",
+            "data": {
+                "type": "FeatureCollection",
+                "features": [{
+                    "type": "Feature",
+                    "geometry": {
+                        "type": "Point",
+                        "coordinates": [79.0051377777458,35.43889155599902]
+                    },
+                    "properties": {
+                        "title": "Afghanistan",
+                        "icon": "none"
+                    }
+                }]
+            }
+        },
+        "layout": {
+            "icon-image": "{icon}",
+            "text-field": "{title}",
+            "text-font": ["Open Sans Semibold", "Arial Unicode MS Bold"],
+            "text-offset": [-45, 0],
+            "text-anchor": "top"
+        }
+    });
+	
+	
+	
+	
+	
+	
+	
+	
+	
+// When a click event occurs on a feature in the places layer, open a popup at the
+// location of the feature, with description HTML from its properties.
+map.on('click', 'places', function (e) {
+    new mapboxgl.Popup()
+        .setLngLat(e.features[0].geometry.coordinates)
+        .setHTML(e.features[0].properties.description)
+        .addTo(map);
+});
+
+// Change the cursor to a pointer when the mouse is over the places layer.
+map.on('mouseenter', 'places', function () {
+    map.getCanvas().style.cursor = 'pointer';
+});
+
+// Change it back to a pointer when it leaves.
+map.on('mouseleave', 'places', function () {
+    map.getCanvas().style.cursor = '';
+});
+
+
+// disable map rotation using right click + drag
+map.dragRotate.disable();
+
+// disable map rotation using touch rotation gesture
+map.touchZoomRotate.disableRotation();
+
+// Add zoom and rotation controls to the map.
+map.addControl(new mapboxgl.NavigationControl());
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,868 @@
+{
+    "version": 8,
+    "name": "Navy-G0",
+    "metadata": {
+        "mapbox:autocomposite": true,
+        "mapbox:type": "template",
+        "mapbox:trackposition": false,
+        "mapbox:groups": {
+            "67e2c92a8a368f3af86303f8f6714bf5": {
+                "name": "Countries",
+                "collapsed": false
+            }
+        }
+    },
+    "center": [
+        53.92494180963979,
+        19.564981125773443
+    ],
+    "zoom": 4.5,
+    "bearing": 0,
+    "pitch": 0,
+    "sources": {
+        "composite": {
+            "url": "mapbox://mapbox.mapbox-streets-v7,lsphantom.84aesgwv",
+            "type": "vector"
+        }
+    },
+    "sprite": "mapbox://sprites/lsphantom/cjcav41tk18i92st8gsxdqm97",
+    "glyphs": "mapbox://fonts/lsphantom/{fontstack}/{range}.pbf",
+    "layers": [
+        {
+            "id": "background",
+            "type": "background",
+            "paint": {
+                "background-color": "hsl(56, 35%, 83%)"
+            }
+        },
+        {
+            "id": "landuse_overlay_national_park",
+            "type": "fill",
+            "source": "composite",
+            "source-layer": "landuse_overlay",
+            "filter": [
+                "==",
+                "class",
+                "national_park"
+            ],
+            "paint": {
+                "fill-color": "#d2edae",
+                "fill-opacity": 0.75
+            }
+        },
+        {
+            "id": "landuse_park",
+            "type": "fill",
+            "source": "composite",
+            "source-layer": "landuse",
+            "filter": [
+                "==",
+                "class",
+                "park"
+            ],
+            "paint": {
+                "fill-color": "#d2edae"
+            }
+        },
+        {
+            "id": "waterway",
+            "type": "line",
+            "source": "composite",
+            "source-layer": "waterway",
+            "filter": [
+                "all",
+                [
+                    "==",
+                    "$type",
+                    "LineString"
+                ],
+                [
+                    "in",
+                    "class",
+                    "canal",
+                    "river"
+                ]
+            ],
+            "paint": {
+                "line-color": "hsl(182, 79%, 92%)",
+                "line-width": {
+                    "base": 1.4,
+                    "stops": [
+                        [
+                            8,
+                            0.5
+                        ],
+                        [
+                            20,
+                            15
+                        ]
+                    ]
+                }
+            }
+        },
+        {
+            "id": "water",
+            "type": "fill",
+            "source": "composite",
+            "source-layer": "water",
+            "paint": {
+                "fill-color": "hsl(182, 79%, 92%)"
+            }
+        },
+        {
+            "id": "bridge_major",
+            "type": "line",
+            "source": "composite",
+            "source-layer": "road",
+            "filter": [
+                "all",
+                [
+                    "==",
+                    "$type",
+                    "LineString"
+                ],
+                [
+                    "all",
+                    [
+                        "==",
+                        "structure",
+                        "bridge"
+                    ],
+                    [
+                        "in",
+                        "class",
+                        "motorway",
+                        "primary",
+                        "secondary",
+                        "tertiary",
+                        "trunk"
+                    ]
+                ]
+            ],
+            "layout": {
+                "line-cap": "round",
+                "line-join": "round"
+            },
+            "paint": {
+                "line-color": "#fff",
+                "line-width": {
+                    "base": 1.4,
+                    "stops": [
+                        [
+                            6,
+                            0.5
+                        ],
+                        [
+                            20,
+                            30
+                        ]
+                    ]
+                }
+            }
+        },
+        {
+            "id": "admin_country",
+            "type": "line",
+            "source": "composite",
+            "source-layer": "admin",
+            "filter": [
+                "all",
+                [
+                    "==",
+                    "$type",
+                    "LineString"
+                ],
+                [
+                    "all",
+                    [
+                        "<=",
+                        "admin_level",
+                        2
+                    ],
+                    [
+                        "==",
+                        "maritime",
+                        0
+                    ]
+                ]
+            ],
+            "layout": {
+                "line-cap": "round",
+                "line-join": "round"
+            },
+            "paint": {
+                "line-color": "#8b8a8a",
+                "line-width": {
+                    "base": 1.3,
+                    "stops": [
+                        [
+                            3,
+                            0.5
+                        ],
+                        [
+                            22,
+                            15
+                        ]
+                    ]
+                }
+            }
+        },
+        {
+            "id": "road_major_label",
+            "type": "symbol",
+            "source": "composite",
+            "source-layer": "road_label",
+            "filter": [
+                "all",
+                [
+                    "==",
+                    "$type",
+                    "LineString"
+                ],
+                [
+                    "in",
+                    "class",
+                    "motorway",
+                    "primary",
+                    "secondary",
+                    "tertiary",
+                    "trunk"
+                ]
+            ],
+            "layout": {
+                "symbol-placement": "line",
+                "text-field": "{name_en}",
+                "text-font": [
+                    "Open Sans Semibold",
+                    "Arial Unicode MS Bold"
+                ],
+                "text-transform": "uppercase",
+                "text-letter-spacing": 0.1,
+                "text-size": {
+                    "base": 1.4,
+                    "stops": [
+                        [
+                            10,
+                            8
+                        ],
+                        [
+                            20,
+                            14
+                        ]
+                    ]
+                },
+                "visibility": "none"
+            },
+            "paint": {
+                "text-color": "#666",
+                "text-halo-color": "rgba(255,255,255,0.75)",
+                "text-halo-width": 2
+            }
+        },
+        {
+            "id": "place_label_other",
+            "type": "symbol",
+            "source": "composite",
+            "source-layer": "place_label",
+            "minzoom": 8,
+            "filter": [
+                "all",
+                [
+                    "==",
+                    "$type",
+                    "Point"
+                ],
+                [
+                    "in",
+                    "type",
+                    "hamlet",
+                    "island",
+                    "neighbourhood",
+                    "suburb",
+                    "town",
+                    "village"
+                ]
+            ],
+            "layout": {
+                "text-field": "{name_en}",
+                "text-font": [
+                    "Open Sans Semibold",
+                    "Arial Unicode MS Bold"
+                ],
+                "text-max-width": 6,
+                "text-size": {
+                    "stops": [
+                        [
+                            6,
+                            12
+                        ],
+                        [
+                            12,
+                            16
+                        ]
+                    ]
+                },
+                "visibility": "none"
+            },
+            "paint": {
+                "text-color": "#666",
+                "text-halo-color": "rgba(255,255,255,0.75)",
+                "text-halo-width": 1,
+                "text-halo-blur": 1
+            }
+        },
+        {
+            "id": "place_label_city",
+            "type": "symbol",
+            "source": "composite",
+            "source-layer": "place_label",
+            "maxzoom": 16,
+            "filter": [
+                "all",
+                [
+                    "==",
+                    "$type",
+                    "Point"
+                ],
+                [
+                    "==",
+                    "type",
+                    "city"
+                ]
+            ],
+            "layout": {
+                "text-field": "{name_en}",
+                "text-font": [
+                    "Open Sans Bold",
+                    "Arial Unicode MS Bold"
+                ],
+                "text-max-width": 10,
+                "text-size": {
+                    "stops": [
+                        [
+                            3,
+                            12
+                        ],
+                        [
+                            8,
+                            16
+                        ]
+                    ]
+                },
+                "visibility": "none"
+            },
+            "paint": {
+                "text-color": "#666",
+                "text-halo-color": "rgba(255,255,255,0.75)",
+                "text-halo-width": 1,
+                "text-halo-blur": 1
+            }
+        },
+        {
+            "id": "country_label",
+            "type": "symbol",
+            "source": "composite",
+            "source-layer": "country_label",
+            "maxzoom": 12,
+            "filter": [
+                "==",
+                "$type",
+                "Point"
+            ],
+            "layout": {
+                "text-field": "{name_en}",
+                "text-font": [
+                    "Open Sans Regular",
+                    "Arial Unicode MS Regular"
+                ],
+                "text-max-width": 10,
+                "text-size": {
+                    "stops": [
+                        [
+                            3,
+                            14
+                        ],
+                        [
+                            8,
+                            22
+                        ]
+                    ]
+                },
+                "visibility": "none"
+            },
+            "paint": {
+                "text-color": "#666",
+                "text-halo-color": "rgba(255,255,255,0.75)",
+                "text-halo-width": 1,
+                "text-halo-blur": 1
+            }
+        },
+        {
+            "id": "cl_turkmenistan",
+            "type": "fill",
+            "source": "composite",
+            "source-layer": "ne_10m_admin_0_countries-bf8cr4",
+            "filter": [
+                "==",
+                "GEOUNIT",
+                "Turkmenistan"
+            ],
+            "layout": {
+                "visibility": "none"
+            },
+            "paint": {
+                "fill-color": "hsla(2, 76%, 51%, 0.9)",
+                "fill-outline-color": "hsla(36, 80%, 26%, 0.9)"
+            }
+        },
+        {
+            "id": "cl_somaliland",
+            "type": "fill",
+            "source": "composite",
+            "source-layer": "ne_10m_admin_0_countries-bf8cr4",
+            "filter": [
+                "==",
+                "GEOUNIT",
+                "Somaliland"
+            ],
+            "layout": {
+                "visibility": "none"
+            },
+            "paint": {
+                "fill-color": "hsla(2, 76%, 51%, 0.9)",
+                "fill-outline-color": "hsla(36, 80%, 26%, 0.9)"
+            }
+        },
+        {
+            "id": "cl_sudan",
+            "type": "fill",
+            "source": "composite",
+            "source-layer": "ne_10m_admin_0_countries-bf8cr4",
+            "filter": [
+                "==",
+                "GEOUNIT",
+                "Sudan"
+            ],
+            "layout": {
+                "visibility": "none"
+            },
+            "paint": {
+                "fill-color": "hsla(2, 76%, 51%, 0.9)",
+                "fill-outline-color": "hsla(36, 80%, 26%, 0.9)"
+            }
+        },
+        {
+            "id": "cl_egypt",
+            "type": "fill",
+            "source": "composite",
+            "source-layer": "ne_10m_admin_0_countries-bf8cr4",
+            "filter": [
+                "==",
+                "GEOUNIT",
+                "Egypt"
+            ],
+            "layout": {
+                "visibility": "none"
+            },
+            "paint": {
+                "fill-color": "hsla(2, 76%, 51%, 0.9)",
+                "fill-outline-color": "hsla(36, 80%, 26%, 0.9)"
+            }
+        },
+        {
+            "id": "cl_yemen",
+            "type": "fill",
+            "metadata": {
+                "mapbox:group": "67e2c92a8a368f3af86303f8f6714bf5"
+            },
+            "source": "composite",
+            "source-layer": "ne_10m_admin_0_countries-bf8cr4",
+            "filter": [
+                "==",
+                "GEOUNIT",
+                "Yemen"
+            ],
+            "layout": {},
+            "paint": {
+                "fill-color": "hsla(36, 74%, 53%, 0.9)",
+                "fill-outline-color": "hsla(36, 80%, 26%, 0.9)"
+            }
+        },
+        {
+            "id": "cl_uae",
+            "type": "fill",
+            "metadata": {
+                "mapbox:group": "67e2c92a8a368f3af86303f8f6714bf5"
+            },
+            "source": "composite",
+            "source-layer": "ne_10m_admin_0_countries-bf8cr4",
+            "filter": [
+                "in",
+                "NAME_LONG",
+                "",
+                "United Arab Emirates"
+            ],
+            "layout": {},
+            "paint": {
+                "fill-color": "hsla(36, 74%, 53%, 0.9)",
+                "fill-outline-color": "hsla(36, 80%, 26%, 0.9)"
+            }
+        },
+        {
+            "id": "cl_somalia",
+            "type": "fill",
+            "metadata": {
+                "mapbox:group": "67e2c92a8a368f3af86303f8f6714bf5"
+            },
+            "source": "composite",
+            "source-layer": "ne_10m_admin_0_countries-bf8cr4",
+            "filter": [
+                "in",
+                "GEOUNIT",
+                "Somalia",
+                "Somaliland"
+            ],
+            "layout": {},
+            "paint": {
+                "fill-color": "hsla(36, 74%, 53%, 0.9)",
+                "fill-outline-color": "hsla(36, 80%, 26%, 0.9)"
+            }
+        },
+        {
+            "id": "cl_syria",
+            "type": "fill",
+            "metadata": {
+                "mapbox:group": "67e2c92a8a368f3af86303f8f6714bf5"
+            },
+            "source": "composite",
+            "source-layer": "ne_10m_admin_0_countries-bf8cr4",
+            "filter": [
+                "==",
+                "GEOUNIT",
+                "Syria"
+            ],
+            "layout": {},
+            "paint": {
+                "fill-color": "hsla(36, 74%, 53%, 0.9)",
+                "fill-outline-color": "hsla(36, 80%, 26%, 0.9)"
+            }
+        },
+        {
+            "id": "cl_saudiarabia",
+            "type": "fill",
+            "metadata": {
+                "mapbox:group": "67e2c92a8a368f3af86303f8f6714bf5"
+            },
+            "source": "composite",
+            "source-layer": "ne_10m_admin_0_countries-bf8cr4",
+            "filter": [
+                "in",
+                "GEOUNIT",
+                "",
+                "Saudi Arabia"
+            ],
+            "layout": {},
+            "paint": {
+                "fill-color": "hsla(36, 74%, 53%, 0.9)",
+                "fill-outline-color": "hsla(36, 80%, 26%, 0.9)"
+            }
+        },
+        {
+            "id": "cl_qatar",
+            "type": "fill",
+            "metadata": {
+                "mapbox:group": "67e2c92a8a368f3af86303f8f6714bf5"
+            },
+            "source": "composite",
+            "source-layer": "ne_10m_admin_0_countries-bf8cr4",
+            "filter": [
+                "==",
+                "GEOUNIT",
+                "Qatar"
+            ],
+            "layout": {},
+            "paint": {
+                "fill-color": "hsla(36, 74%, 53%, 0.9)",
+                "fill-outline-color": "hsla(36, 80%, 26%, 0.9)"
+            }
+        },
+        {
+            "id": "cl_pakistan",
+            "type": "fill",
+            "metadata": {
+                "mapbox:group": "67e2c92a8a368f3af86303f8f6714bf5"
+            },
+            "source": "composite",
+            "source-layer": "ne_10m_admin_0_countries-bf8cr4",
+            "filter": [
+                "==",
+                "GEOUNIT",
+                "Pakistan"
+            ],
+            "layout": {},
+            "paint": {
+                "fill-color": "hsla(36, 74%, 53%, 0.9)",
+                "fill-outline-color": "hsla(36, 80%, 26%, 0.9)"
+            }
+        },
+        {
+            "id": "cl_palestine",
+            "type": "fill",
+            "metadata": {
+                "mapbox:group": "67e2c92a8a368f3af86303f8f6714bf5"
+            },
+            "source": "composite",
+            "source-layer": "ne_10m_admin_0_countries-bf8cr4",
+            "filter": [
+                "==",
+                "GEOUNIT",
+                "Palestine"
+            ],
+            "layout": {},
+            "paint": {
+                "fill-color": "hsla(36, 74%, 53%, 0.9)",
+                "fill-outline-color": "hsla(36, 80%, 26%, 0.9)"
+            }
+        },
+        {
+            "id": "cl_oman",
+            "type": "fill",
+            "metadata": {
+                "mapbox:group": "67e2c92a8a368f3af86303f8f6714bf5"
+            },
+            "source": "composite",
+            "source-layer": "ne_10m_admin_0_countries-bf8cr4",
+            "filter": [
+                "==",
+                "GEOUNIT",
+                "Oman"
+            ],
+            "layout": {},
+            "paint": {
+                "fill-color": "hsla(36, 74%, 53%, 0.9)",
+                "fill-outline-color": "hsla(36, 80%, 26%, 0.9)"
+            }
+        },
+        {
+            "id": "cl_lebanon",
+            "type": "fill",
+            "metadata": {
+                "mapbox:group": "67e2c92a8a368f3af86303f8f6714bf5"
+            },
+            "source": "composite",
+            "source-layer": "ne_10m_admin_0_countries-bf8cr4",
+            "filter": [
+                "==",
+                "GEOUNIT",
+                "Lebanon"
+            ],
+            "layout": {
+                "visibility": "visible"
+            },
+            "paint": {
+                "fill-color": "hsla(36, 74%, 53%, 0.9)",
+                "fill-outline-color": "hsla(36, 80%, 26%, 0.9)"
+            }
+        },
+        {
+            "id": "cl_kuwait",
+            "type": "fill",
+            "metadata": {
+                "mapbox:group": "67e2c92a8a368f3af86303f8f6714bf5"
+            },
+            "source": "composite",
+            "source-layer": "ne_10m_admin_0_countries-bf8cr4",
+            "filter": [
+                "==",
+                "GEOUNIT",
+                "Kuwait"
+            ],
+            "layout": {},
+            "paint": {
+                "fill-color": "hsla(36, 74%, 53%, 0.9)",
+                "fill-outline-color": "hsla(36, 80%, 26%, 0.9)"
+            }
+        },
+        {
+            "id": "cl_jordan",
+            "type": "fill",
+            "metadata": {
+                "mapbox:group": "67e2c92a8a368f3af86303f8f6714bf5"
+            },
+            "source": "composite",
+            "source-layer": "ne_10m_admin_0_countries-bf8cr4",
+            "filter": [
+                "==",
+                "GEOUNIT",
+                "Jordan"
+            ],
+            "layout": {},
+            "paint": {
+                "fill-color": "hsla(36, 74%, 53%, 0.9)",
+                "fill-outline-color": "hsla(36, 80%, 26%, 0.9)"
+            }
+        },
+        {
+            "id": "cl_israel",
+            "type": "fill",
+            "metadata": {
+                "mapbox:group": "67e2c92a8a368f3af86303f8f6714bf5"
+            },
+            "source": "composite",
+            "source-layer": "ne_10m_admin_0_countries-bf8cr4",
+            "filter": [
+                "==",
+                "GEOUNIT",
+                "Israel"
+            ],
+            "layout": {
+                "visibility": "visible"
+            },
+            "paint": {
+                "fill-color": "hsla(36, 74%, 53%, 0.9)",
+                "fill-outline-color": "hsla(36, 80%, 26%, 0.9)"
+            }
+        },
+        {
+            "id": "cl_iraq",
+            "type": "fill",
+            "metadata": {
+                "mapbox:group": "67e2c92a8a368f3af86303f8f6714bf5"
+            },
+            "source": "composite",
+            "source-layer": "ne_10m_admin_0_countries-bf8cr4",
+            "filter": [
+                "==",
+                "GEOUNIT",
+                "Iraq"
+            ],
+            "layout": {},
+            "paint": {
+                "fill-color": "hsla(36, 74%, 53%, 0.9)",
+                "fill-outline-color": "hsla(36, 80%, 26%, 0.9)"
+            }
+        },
+        {
+            "id": "cl_iran",
+            "type": "fill",
+            "metadata": {
+                "mapbox:group": "67e2c92a8a368f3af86303f8f6714bf5"
+            },
+            "source": "composite",
+            "source-layer": "ne_10m_admin_0_countries-bf8cr4",
+            "filter": [
+                "==",
+                "GEOUNIT",
+                "Iran"
+            ],
+            "layout": {},
+            "paint": {
+                "fill-color": "hsla(36, 74%, 53%, 0.9)",
+                "fill-outline-color": "hsla(36, 80%, 26%, 0.9)"
+            }
+        },
+        {
+            "id": "cl_eritrea",
+            "type": "fill",
+            "metadata": {
+                "mapbox:group": "67e2c92a8a368f3af86303f8f6714bf5"
+            },
+            "source": "composite",
+            "source-layer": "ne_10m_admin_0_countries-bf8cr4",
+            "filter": [
+                "==",
+                "GEOUNIT",
+                "Eritrea"
+            ],
+            "layout": {},
+            "paint": {
+                "fill-color": "hsla(36, 74%, 53%, 0.9)",
+                "fill-outline-color": "hsla(36, 80%, 26%, 0.9)"
+            }
+        },
+        {
+            "id": "cl_ethiopia",
+            "type": "fill",
+            "metadata": {
+                "mapbox:group": "67e2c92a8a368f3af86303f8f6714bf5"
+            },
+            "source": "composite",
+            "source-layer": "ne_10m_admin_0_countries-bf8cr4",
+            "filter": [
+                "==",
+                "GEOUNIT",
+                "Ethiopia"
+            ],
+            "layout": {},
+            "paint": {
+                "fill-color": "hsla(36, 74%, 53%, 0.9)",
+                "fill-outline-color": "hsla(36, 80%, 26%, 0.9)"
+            }
+        },
+        {
+            "id": "cl_djibouti",
+            "type": "fill",
+            "metadata": {
+                "mapbox:group": "67e2c92a8a368f3af86303f8f6714bf5"
+            },
+            "source": "composite",
+            "source-layer": "ne_10m_admin_0_countries-bf8cr4",
+            "filter": [
+                "==",
+                "GEOUNIT",
+                "Djibouti"
+            ],
+            "layout": {
+                "visibility": "visible"
+            },
+            "paint": {
+                "fill-color": "hsla(36, 74%, 53%, 0.9)",
+                "fill-outline-color": "hsla(36, 80%, 26%, 0.9)"
+            }
+        },
+        {
+            "id": "cl_bahrain",
+            "type": "fill",
+            "metadata": {
+                "mapbox:group": "67e2c92a8a368f3af86303f8f6714bf5"
+            },
+            "source": "composite",
+            "source-layer": "ne_10m_admin_0_countries-bf8cr4",
+            "filter": [
+                "==",
+                "GEOUNIT",
+                "Bahrain"
+            ],
+            "layout": {},
+            "paint": {
+                "fill-color": "hsla(36, 74%, 53%, 0.9)",
+                "fill-outline-color": "hsla(36, 80%, 26%, 0.9)"
+            }
+        },
+        {
+            "id": "cl_afghanistan",
+            "type": "fill",
+            "metadata": {
+                "mapbox:group": "67e2c92a8a368f3af86303f8f6714bf5"
+            },
+            "source": "composite",
+            "source-layer": "ne_10m_admin_0_countries-bf8cr4",
+            "filter": [
+                "==",
+                "GEOUNIT",
+                "Afghanistan"
+            ],
+            "layout": {},
+            "paint": {
+                "fill-color": "hsla(36, 74%, 53%, 0.9)",
+                "fill-outline-color": "hsla(36, 80%, 26%, 0.9)"
+            }
+        }
+    ],
+    "created": "2018-01-11T19:03:44.834Z",
+    "id": "cjcav41tk18i92st8gsxdqm97",
+    "modified": "2018-01-18T18:45:21.788Z",
+    "owner": "lsphantom",
+    "visibility": "private",
+    "draft": false
+}
