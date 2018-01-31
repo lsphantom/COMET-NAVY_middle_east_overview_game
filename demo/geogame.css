@@ -1,0 +1,8 @@
+#holder {position: relative}
+#carea { border: 1px solid #000;}
+#oarea { border: 1px solid #000;position: absolute;left:0px;top:0px;}
+td {font-weight: 700;vertical-align: top}
+.NB {border-style:none}
+.attribution {
+  font-size: 10px;
+}
