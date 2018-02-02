@@ -12,37 +12,8 @@
 <body onload="init();">
 	<table><tbody><tr><td>
 	<button onclick="newGame();">Re-Start</button>
-	Region:
-	<select id="group" name="group" onchange="newGame();">
-	<option value="0">Select a region</option>
-	<option selected="selected" value="8">Middle East</option>
-	</select>
-	<button onclick="showAll();">Show All</button>
-	Audio Volume:
-	<select id="volume" name="volume" onchange="newVolume();">
-	<option value="1">100%</option>
-	<option value=".90">90%</option>
-	<option value=".80">80%</option>
-	<option value=".70">70%</option>
-	<option value=".60">60%</option>
-	<option value=".50">50%</option>
-	<option value=".40">40%</option>
-	<option value=".30">30%</option>
-	<option value=".20">20%</option>
-	<option value=".10">10%</option>
-	<option selected="selected" value="0">Off</option>
-	</select>
-	Map Size:
-	<select id="size" name="size" onchange="newSize(true);">
-	<option value="0.75">Small</option>
-	<option value="1.0">Medium</option>
-	<option value="1.25">Large</option>
-	<option selected="selected" value="1.5">xlarge</option>
-	<option value="2">xxLarge</option>
-	</select>
-	<br>
+	
 	<div id="holder">
-
 	<canvas id="carea" width="700" height="540">
 		<p>Please use a supported browser to view this interaction.</p>
 		<p>Supported browsers: <a href="https://www.google.com/chrome/browser/desktop/">Google Chrome</a>, <a href="http://www.mozilla.com/">Firefox</a>, <a href="http://www.apple.com/safari">Safari</a>.</p>

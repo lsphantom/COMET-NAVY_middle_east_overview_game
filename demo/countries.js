@@ -46,6 +46,8 @@ var g_regions=[
 	/* South Pacific */
 	0,1,-330,1900,"13","American Samoa,Baker Island,Cook Islands,Fiji,French Polynesia,Howland Island,Jarvis Island,Kiribati,Marshall Islands,Micronesia,Nauru,New Caledonia,Niue,Samoa,Solomon Islands,Tonga,Tokelau,Tuvalu,Vanuatu,Wallis & Futuna"];
 
+
+
 function initproject()
 {
 	m_pixelsPerLonDegree=16.0/360.0;
@@ -532,22 +534,22 @@ function draw()
 
 					m_time=Math.floor((new Date().getTime()-m_start)/1000);
 					m_finished=true;
-					playSFX("tada",1.0);
+					//playSFX("tada",1.0);
 
 					/* update the high score cookies */
-					if(m_scores[m_level-2].time==0)
+					if(m_scores[m_level].time==0)
 						better=true;
-					else if(m_time<m_scores[m_level-2].time)
+					else if(m_time<m_scores[m_level].time)
 						better=true;
-					else if((m_time==m_scores[m_level-2].time) && (m_errors<m_scores[m_level-2].errors))
+					else if((m_time==m_scores[m_level].time) && (m_errors<m_scores[m_level].errors))
 						better=true;
 					else
 						better=false;
 
 					if(better)
 					{
-						m_scores[m_level-2].time=m_time;
-						m_scores[m_level-2].errors=m_errors;
+						m_scores[m_level].time=m_time;
+						m_scores[m_level].errors=m_errors;
 
 						/* save a cookie */
 						scores="";
@@ -596,28 +598,6 @@ function checkInside(coords,px,py)
 	return (odd);
 }
 
-function playSFX(name,relvol)
-{
-	var vol=m_vol*relvol;
-	var snd;
-
-	if(vol)
-	{
-		try
-		{
-			snd=new Audio();
-		}
-		catch(err)
-		{
-			//browser doesn't support the audio constructor
-			m_vol=0;
-			return;
-		}
-		snd.src=document.getElementById(name).src;
-		snd.volume=vol;
-		snd.play();
-	}
-}
 
 function mouseDown(ev)
 {
@@ -737,14 +717,14 @@ function updateOverlay()
 						{
 							/* sucess! */
 							c.shown=true;
-							playSFX("bleep",1.0);
+							//playSFX("bleep",1.0);
 							draw();
 							inside=false;
 						}
 						else
 						{
 							++m_errors;
-							playSFX("buzzer",0.5);
+							//playSFX("buzzer",0.5);
 						}
 					}
 				}
@@ -853,7 +833,7 @@ function updateOverlay()
 				if(i==over)
 					ocontext.strokeStyle = "rgba(255,0,0,0.75)";
 				else
-					ocontext.strokeStyle = "rgba(255,255,255,0.75)";
+					ocontext.strokeStyle = "rgba(160,25,25,0.75)";
 				ocontext.stroke();
 			}
 		}
@@ -883,7 +863,7 @@ function updateOverlay()
 					ocontext.fillText(name.text, name.x,name.y);
 					if(mpress)
 					{
-						playSFX("bleep",0.2);
+						//playSFX("bleep",0.2);
 						m_place=i;
 					}
 					break;
@@ -898,12 +878,12 @@ function updateOverlay()
 }
 
 /* update the canvas size */
-function newSize(LimeGreenraw)
+function newSize(redraw)
 {
-	var sel;
+	var sel =  1.25;
 
-	sel=document.getElementById('size');
-	m_ws=parseFloat(sel.options[sel.selectedIndex].value);
+	//sel=document.getElementById('size');
+	m_ws=parseFloat(sel);
 
 	ocanvas.width=canvas.width=Math.floor(720*m_ws);
 	ocanvas.height=canvas.height=Math.floor(540*m_ws);
@@ -912,20 +892,13 @@ function newSize(LimeGreenraw)
 	m_x=g_regions[m_index+2]*m_ws;
 	m_y=g_regions[m_index+3]*m_ws;
 	m_namesize=Math.floor(g_regions[m_index+4]*m_ws);
-	if(LimeGreenraw)
+	if(redraw)
 	{
 		draw();
 		updateOverlay();
 	}
 }
 
-function newVolume()
-{
-	var sel;
-
-	sel=document.getElementById('volume');
-	m_vol=parseFloat(sel.options[sel.selectedIndex].value);
-}
 
 function newGame()
 {
@@ -938,8 +911,9 @@ function newGame()
 	m_showall=false;
 	m_finished=false;
 	m_place=-1;
-	sel=document.getElementById('group');
-	m_level=parseInt(sel.options[sel.selectedIndex].value);
+	//sel=document.getElementById('group');
+	//m_level=parseInt(sel.options[sel.selectedIndex].value);
+	m_level=8;
 	m_index=m_level*6;
 
 	//scale, tx,ty
@@ -1030,12 +1004,12 @@ function init()
 	initproject();
 
 	/* init the scores */
-	sel=document.getElementById('group');
-	m_scores=new Array(sel.length-2);
+	sel=1
+	m_scores=new Array(sel);
 	for(i=0;i<m_scores.length;++i)
 	{
 		m_scores[i]=new Array();
-		m_scores[i].name=sel.options[i+2].text;
+		m_scores[i].name="Middle East";
 		m_scores[i].time=0;
 		m_scores[i].errors=0;
 	}
@@ -1140,7 +1114,7 @@ function init()
 	ocanvas.onmousemove=updateCursor;
 	ocanvas.onmousedown=mouseDown;
 	ocanvas.onmouseup=mouseUp;
-	newVolume();
+	//newVolume();
 	newGame();
 	if(cheat)
 		alert(out);
