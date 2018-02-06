@@ -32,7 +32,7 @@ var g_regions=[
 	/* South and Central Africa */
 	0,0.93,1860,1860,"11","Angola,Botswana,Burundi,Comoros,Congo,D.R. of Congo,Equatorial Guinea,Gabon,Kenya,Madagascar,Malawi,Mauritius,Mozambique,Namibia,Reunion,Rwanda,Sao Tome & Principe,Seychelles,South Africa,Lesotho,Swaziland,Tanzania,Uganda,Zambia,Zimbabwe",
 	/* Middle East */
-	0,0.985,2290,1560,"9","Afghanistan,Bahrain,Djibouti,Ethiopia,Eritrea,Iran,Iraq,Israel,Jordan,Kuwait,Lebanon,Oman,Palestine,Pakistan,Qatar,Saudi Arabia,Syria,Somalia,United Arab Emirates,Yemen",
+	0,0.985,2290,1560,"10", "Afghanistan,Bahrain,Djibouti,Ethiopia,Eritrea,Iran,Iraq,Israel,Jordan,Kuwait,Lebanon,Oman,Palestine,Pakistan,Qatar,Saudi Arabia,Syria,Somalia,United Arab Emirates,Yemen",
 	/* Asia */
 	0,0.52,1410,740,"11","Ashmore And Cartier Islands,Australia,Bangladesh,Bhutan,British Indian Ocean Terr.,Brunei,Cambodia,China,Christmas Island,Cocos (Keeling) Islands,Federated States Of Micronesia,Hong Kong,India,Indonesia,Japan,North Korea,Guam,South Korea,Laos,Malaysia,Maldives,Mongolia,Myanmar,Nepal,Papua New Guinea,Northern Mariana Islands,Palau,Philippines,Singapore,Solomon Islands,Sri Lanka,Taiwan,Thailand,Timor Leste,Vietnam",
 	/* Carribean */
@@ -263,32 +263,20 @@ function draw()
 	var pass,numpasses,tw,gap;
 	var cw=new Array();
 
+	var map = document.getElementById('source');
+
+
+
 	context.shadowOffsetX = 0;
 	context.shadowOffsetY = 0;
 	context.shadowBlur = 0;
 	context.shadowColor = "rgba(0, 0, 0, 0.5)";
 
+	//draw water
 	context.fillStyle = "rgb(218, 250, 251)";
 	context.fillRect (0, 0, w,h);
-
-	if(m_demo==false)
-	{
-		/* draw waves
-		for(ty=0;ty<h;ty+=30)
-		{
-			for(tx=ty%40;tx<w;tx+=40)
-			{
-				context.strokeStyle = "rgba(255,255,255,0.35)";
-				context.beginPath();
-				context.arc(tx,ty,6,0,Math.PI*0.5,false);
-				context.stroke();
-				context.strokeStyle = "rgba(0,0,0,0.25)";
-				context.beginPath();
-				context.arc(tx+12,ty,6,Math.PI,Math.PI*0.5,true);
-				context.stroke();
-			}
-		} */
-	}
+	//draw map
+	context.drawImage(map, 0, 0, 856, 849, 34, -80, 710, 710);
 
 	if(m_x<0)
 		numpasses=2;
@@ -322,19 +310,19 @@ function draw()
 					{
 						context.fillStyle = "#E3E1C4";
 						context.fill();
-						context.strokeStyle = "rgba(0,0,0,0.2)";
+						context.strokeStyle = "rgba(0,0,0,0)";
 					}
 					else if(c.shown)
 					{
 						context.fillStyle = c.color;
 						context.fill();
-						context.strokeStyle = "rgba(50,0,0,0.5)";
+						context.strokeStyle = "rgba(50,0,0,0)";
 					}
 					else
 					{
-						context.fillStyle = "grey";
+						context.fillStyle = "rgba(0,0,0,0)";
 						context.fill();
-						context.strokeStyle = "rgba(0,0,0,0.4)";
+						context.strokeStyle = "rgba(0,0,0,0)";
 					}
 					context.stroke();
 				}
@@ -370,7 +358,6 @@ function draw()
 	}
 
 	/* draw any boxes for translated areas */
-
 	context.strokeStyle = "white";
 	m_numnames=0;
 	for(i=0;i<m_countries.length;++i)
@@ -393,9 +380,9 @@ function draw()
 	if(!m_demo)
 	{
 		context.fillStyle = "white";
-		context.fillRect (0, h*0.8, w,h);
+		context.fillRect (0, h*0.85, w,h);
 		context.fillStyle = "black";
-		context.fillRect (0, h*0.8, w,1);
+		context.fillRect (0, h*0.85, w,1);
 	}
 
 	context.font = 'italic '+Math.floor(m_ws*12)+'px sans-serif';
@@ -453,11 +440,11 @@ function draw()
 				else
 				{
 					sx=cw[tx];
-					sy=(h*0.82)+(h*0.025*ty);
+					sy=(h*0.865)+(h*0.025*ty);
 					context.fillText(c.name, sx,sy);
 					m_names[m_numnames++]=new name(i,c.name,sx,sy,dim.width,12*m_ws);
 				}
-				if(++ty==7)
+				if(++ty==5)
 				{
 					ty=0;
 					++tx;
@@ -523,7 +510,7 @@ function draw()
 			if(m_showall)
 			{
 				context.font = 'italic '+Math.floor(m_ws*15)+'px sans-serif';
-				context.fillText("Press the Re-Start button to begin.", w*0.5,h*0.85);
+				context.fillText("Press the Re-Start button to begin.", w*0.5,h*0.87);
 			}
 			else
 			{
@@ -537,19 +524,19 @@ function draw()
 					//playSFX("tada",1.0);
 
 					/* update the high score cookies */
-					if(m_scores[m_level].time==0)
+					if(m_scores[0].time==0)
 						better=true;
-					else if(m_time<m_scores[m_level].time)
+					else if(m_time<m_scores[0].time)
 						better=true;
-					else if((m_time==m_scores[m_level].time) && (m_errors<m_scores[m_level].errors))
+					else if((m_time==m_scores[0].time) && (m_errors<m_scores[0].errors))
 						better=true;
 					else
 						better=false;
 
 					if(better)
 					{
-						m_scores[m_level].time=m_time;
-						m_scores[m_level].errors=m_errors;
+						m_scores[0].time=m_time;
+						m_scores[0].errors=m_errors;
 
 						/* save a cookie */
 						scores="";
@@ -557,16 +544,16 @@ function draw()
 						{
 							if(scores.length)
 								scores+=',';
-							scores+=''+m_scores[i].time+','+m_scores[i].errors;
+							scores+=''+m_scores[0].time+','+m_scores[0].errors;
 						}
 						setCookie('scores',scores,365*10);
 					}
 
 				}
-				context.font = 'italic '+Math.floor(m_ws*80)+'px sans-serif';
-				context.fillText("Finished!", w*0.5,h*0.81);
+				context.font = 'italic '+Math.floor(m_ws*40)+'px sans-serif';
+				context.fillText("Finished!", w*0.5,h*0.87);
 				context.font = 'italic '+Math.floor(m_ws*25)+'px sans-serif';
-				context.fillText("Time: "+m_time+" seconds, with "+m_errors+" errors", w*0.5,h*0.95);
+				context.fillText("Time: "+m_time+" seconds, with "+m_errors+" errors", w*0.5,h*0.94);
 			}
 		}
 	}
@@ -762,6 +749,7 @@ function updateOverlay()
 								ocontext.lineTo(((coords[j]*m_s)-m_x)-wx,(coords[j+1]*m_s)-m_y);
 							}
 							ocontext.closePath();
+							ocontext.lineWidth = 2;
 							ocontext.strokeStyle = "rgba(255,0,0,0.75)";
 							ocontext.stroke();
 						}
@@ -1014,7 +1002,8 @@ function init()
 		m_scores[i].errors=0;
 	}
 	/* load the scores from the score cookie */
-	ss=getCookie('scores');
+	//ss=getCookie('scores');
+	ss=1;
 	if(ss.length)
 	{
 		var scores=ss.split(",");
