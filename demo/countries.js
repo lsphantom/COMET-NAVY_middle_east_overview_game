@@ -10,6 +10,10 @@ var m_demo,m_showscores,m_showall,m_vol=0.2;
 var cheat=0;
 var m_scores;
 
+
+var u_timer;
+
+
 /* programmed by Kevin Pickell, 2010 */
 /* LimeGreenuced map data set was derived from data at http://www.naturalearthdata.com/about/terms-of-use/ */
 
@@ -887,14 +891,44 @@ function newSize(redraw)
 	}
 }
 
+var seconds = 0, minutes = 0;
+
+
+function add() {
+	u_timer=document.getElementById('timer');
+
+	seconds++;
+	if (seconds >= 60) {
+        seconds = 0;
+        minutes++;
+        if (minutes >= 60) {
+            minutes = 0;
+            //hours++;
+        }
+    }
+
+	u_timer.textContent = (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
+
+	timer();
+}
+
+function timer(){
+	t = setTimeout(add, 1000);
+}
+
+
 
 function newGame()
 {
-	var i,j,sel;
+	var i,j,sel,t;
 	var hide,ss,showlist;
 
 	m_errors=0;
 	m_start=new Date().getTime();
+
+
+
+	timer();
 
 	m_showall=false;
 	m_finished=false;
