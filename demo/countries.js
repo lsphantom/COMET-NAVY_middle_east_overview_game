@@ -28,28 +28,27 @@ var g_regions=[
 	/* states of the USA */
 	1,0.86,400,1200,"9","*",
 	/* Europe */
-	0,1.0,1800,1200,"9","Albania,Andorra,Austria,Belarus,Belgium,Bosnia & Herzegovina,Bulgaria,Croatia,Cyprus,Czech Republic,Denmark,Estonia,France,Germany,Gibraltar,Greece,Guernsey & Jersey,Hungary,Ireland,Isle of Man,Italy,Latvia,Liechtenstein,Lithuania,Luxembourg,Macedonia,Malta,Moldova,Netherlands,Poland,Portugal,Romania,San Marino,Monaco,Slovakia,Slovenia,Spain,Switzerland,Turkey,Ukraine,United Kingdom,Vatican City,Serbia,Montenegro,Kosovo,Northern Cyprus,Russia",
+	0,1.0,1800,1200,"9","",
 	/* Scandanavia */
-	0,1.02,1800,900,"12","Aland,Denmark,Estonia,Faroe Islands,Finland,Iceland,Latvia,Lithuania,Norway,Russia,Sweden",
+	0,1.02,1800,900,"12","",
 	/* North Africa */
-	0,0.91,1670,1440,"11","Algeria,Benin,Burkina Faso,Cameroon,Central African Republic,Chad,Cote D'Ivoire,Djibouti,Egypt,Eritrea,Ethiopia,The Gambia,Ghana,Guinea,Guinea-Bissau,Liberia,Libya,Mali,Mauritania,Morocco,Niger,Nigeria,Senegal,Sierra Leone,Somalia,Somaliland,Sudan,Togo,Tunisia,Western Sahara",
+	0,0.91,1670,1440,"11","",
 	/* South and Central Africa */
-	0,0.93,1860,1860,"11","Angola,Botswana,Burundi,Comoros,Congo,D.R. of Congo,Equatorial Guinea,Gabon,Kenya,Madagascar,Malawi,Mauritius,Mozambique,Namibia,Reunion,Rwanda,Sao Tome & Principe,Seychelles,South Africa,Lesotho,Swaziland,Tanzania,Uganda,Zambia,Zimbabwe",
+	0,0.93,1860,1860,"11","",
 	/* Middle East */
-	0,0.985,2290,1560,"10", "Afghanistan,Bahrain,Djibouti,Ethiopia,Eritrea,Iran,Iraq,Israel,Jordan,Kuwait,Lebanon,Oman,Palestine,Pakistan,Qatar,Saudi Arabia,Syria,Somalia,United Arab Emirates,Yemen",
+	0,0.985,2290,1520,"10", "Afghanistan,Bahrain,Djibouti,Ethiopia,Eritrea,Iran,Iraq,Israel,Jordan,Kuwait,Lebanon,Oman,Palestine,Pakistan,Qatar,Saudi Arabia,Syria,Somalia,United Arab Emirates,Yemen",
 	/* Asia */
-	0,0.52,1410,740,"11","Ashmore And Cartier Islands,Australia,Bangladesh,Bhutan,British Indian Ocean Terr.,Brunei,Cambodia,China,Christmas Island,Cocos (Keeling) Islands,Federated States Of Micronesia,Hong Kong,India,Indonesia,Japan,North Korea,Guam,South Korea,Laos,Malaysia,Maldives,Mongolia,Myanmar,Nepal,Papua New Guinea,Northern Mariana Islands,Palau,Philippines,Singapore,Solomon Islands,Sri Lanka,Taiwan,Thailand,Timor Leste,Vietnam",
+	0,0.52,1410,740,"11","",
 	/* Carribean */
-	0,4.0,4800,7250,"12","Anguilla,Antigua & Barbuda,Aruba,Barbados,British Virgin Islands,Dominica,Dominican Republic,Grenada,Guadeloupe,Haiti,Martinique,Montserrat,Netherlands Antilles,Puerto Rico,St. Barthelemy,St. Kitts & Nevis,St. Lucia,St. Martin,St. Vincent & the Grenadines,Trinidad & Tobago,US Virgin Islands",
+	0,4.0,4800,7250,"12","",
 	/* Central America */
-	0,2.0,1830,3540,"12","The Bahamas,Belize,Cayman Islands,Costa Rica,Cuba,Dominican Republic,El Salvador,Guatemala,Haiti,Honduras,Jamaica,Mexico,Nicaragua,Panama,Turks & Caicos Islands",
+	0,2.0,1830,3540,"12","",
 	/* South America */
-	0,0.48,200,920,"11","Argentina,Bolivia,Brazil,Chile,Colombia,Ecuador,Falkland Islands,French Guiana,Guyana,Paraguay,Peru,Pitcairn Islands,South Georgia And The Sandwich Islands,Suriname,Uruguay,Venezuela",
+	0,0.48,200,920,"11","",
 	/* North America */
-	0,0.37,0,260,"15","Canada,United States,Mexico",
+	0,0.37,0,260,"15","",
 	/* South Pacific */
-	0,1,-330,1900,"13","American Samoa,Baker Island,Cook Islands,Fiji,French Polynesia,Howland Island,Jarvis Island,Kiribati,Marshall Islands,Micronesia,Nauru,New Caledonia,Niue,Samoa,Solomon Islands,Tonga,Tokelau,Tuvalu,Vanuatu,Wallis & Futuna"];
-
+	0,1,-330,1900,"13",""];
 
 
 function initproject()
@@ -280,7 +279,7 @@ function draw()
 	context.fillStyle = "rgb(218, 250, 251)";
 	context.fillRect (0, 0, w,h);
 	//draw map
-	context.drawImage(map, 0, 0, 856, 849, 34, -80, 710, 710);
+	context.drawImage(map, 0, 0, 856, 849, 34, -30, 710, 710);
 
 	if(m_x<0)
 		numpasses=2;
@@ -318,7 +317,7 @@ function draw()
 					}
 					else if(c.shown)
 					{
-						context.fillStyle = c.color;
+						context.fillStyle = "rgba(0,220,0,0.3)";
 						context.fill();
 						context.strokeStyle = "rgba(50,0,0,0)";
 					}
@@ -554,10 +553,13 @@ function draw()
 					}
 
 				}
+				
+				stopTimer();
+				
 				context.font = 'italic '+Math.floor(m_ws*40)+'px sans-serif';
 				context.fillText("Finished!", w*0.5,h*0.87);
 				context.font = 'italic '+Math.floor(m_ws*25)+'px sans-serif';
-				context.fillText("Time: "+m_time+" seconds, with "+m_errors+" errors", w*0.5,h*0.94);
+				context.fillText("Errors: " + m_errors, w*0.5,h*0.94);
 			}
 		}
 	}
@@ -753,7 +755,7 @@ function updateOverlay()
 								ocontext.lineTo(((coords[j]*m_s)-m_x)-wx,(coords[j+1]*m_s)-m_y);
 							}
 							ocontext.closePath();
-							ocontext.lineWidth = 2;
+							//ocontext.lineWidth = 2;
 							ocontext.strokeStyle = "rgba(255,0,0,0.75)";
 							ocontext.stroke();
 						}
@@ -877,8 +879,8 @@ function newSize(redraw)
 	//sel=document.getElementById('size');
 	m_ws=parseFloat(sel);
 
-	ocanvas.width=canvas.width=Math.floor(720*m_ws);
-	ocanvas.height=canvas.height=Math.floor(540*m_ws);
+	ocanvas.width=canvas.width=Math.floor(670*m_ws);
+	ocanvas.height=canvas.height=Math.floor(648*m_ws);
 
 	m_s=g_regions[m_index+1]*m_ws;
 	m_x=g_regions[m_index+2]*m_ws;
@@ -891,44 +893,83 @@ function newSize(redraw)
 	}
 }
 
-var seconds = 0, minutes = 0;
+var seconds = 0; 
+var tens = 0;
+var Interval;
 
 
-function add() {
-	u_timer=document.getElementById('timer');
+function stopTimer() {
+	clearInterval(Interval);
+}
 
-	seconds++;
-	if (seconds >= 60) {
-        seconds = 0;
-        minutes++;
-        if (minutes >= 60) {
-            minutes = 0;
-            //hours++;
-        }
+
+
+function runTimer(){
+  
+  var appendTens = document.getElementById("tens");
+  var appendSeconds = document.getElementById("seconds");
+  
+
+  function initTimer() {
+     clearInterval(Interval);
+     Interval = setInterval(startTimer, 1000);
+  }
+  
+  function resetTimer() {
+	clearInterval(Interval);
+	seconds = 0;
+	tens = 0;
+    appendTens.innerHTML = "00";
+  	appendSeconds.innerHTML = "00";
+  }
+  
+   
+  
+  function startTimer () {
+    tens++; 
+    
+    if(tens < 9){
+      appendTens.innerHTML = "0" + tens;
     }
-
-	u_timer.textContent = (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
-
-	timer();
+    
+    if (tens > 9){
+      appendTens.innerHTML = tens;
+      
+    } 
+    
+    if (tens > 59) {
+      seconds++;
+      appendSeconds.innerHTML = "0" + seconds;
+      tens = 0;
+      appendTens.innerHTML = "0" + 0;
+    }
+    
+    if (seconds > 9){
+      appendSeconds.innerHTML = seconds;
+    }
+  
+  }	
+	resetTimer();
+	initTimer();
 }
 
-function timer(){
-	t = setTimeout(add, 1000);
-}
 
-
+ 
 
 function newGame()
 {
+	
+	var start_button = document.getElementById('start-btn');
+		start_button.innerHTML = "Re-Start";
+	
+	runTimer();
+	
+		
 	var i,j,sel,t;
 	var hide,ss,showlist;
 
 	m_errors=0;
 	m_start=new Date().getTime();
-
-
-
-	timer();
 
 	m_showall=false;
 	m_finished=false;
@@ -1001,6 +1042,7 @@ function showAll()
 
 function init()
 {
+	
 	var i,xmldata,sel,ss,scores;
 
 	// Find the canvas element.
@@ -1138,7 +1180,29 @@ function init()
 	ocanvas.onmousedown=mouseDown;
 	ocanvas.onmouseup=mouseUp;
 	//newVolume();
-	newGame();
+	//newGame();
+	
+function starterText(){
+	// Find the canvas element.
+	canvas = document.getElementById('carea');
+	var ctx = canvas.getContext("2d");
+	
+	ctx.beginPath();
+	ctx.rect(0, 0, 910, 650);
+	ctx.fillStyle = "#dbfafc";
+	ctx.fill();	
+	
+		ctx.font = 'italic 14px Helvetica';
+		ctx.font = "24px Arial";
+		ctx.fillStyle = "black";
+		ctx.fillText("Click the start button to begin map quiz.", 20, 50);
+		ctx.fillText("Then, drag each country name to it's proper place on the map.", 20,90);
+	
+	
+}
+	
+starterText();
+	
 	if(cheat)
 		alert(out);
 }

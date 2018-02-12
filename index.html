@@ -99,7 +99,7 @@ function onUp(e) {
     // Print the coordinates of where the point had
     // finished being dragged to on the map.
     coordinates.style.display = 'block';
-    coordinates.innerHTML = 'Longitude: ' + coords.lng + '<br />Latitude: ' + coords.lat;
+    coordinates.innerHTML = coords.lng.toFixed(6) + ',' + coords.lat.toFixed(6) + ',';
     canvas.style.cursor = '';
     isDragging = false;
 
@@ -126,7 +126,7 @@ map.on('load', function () {
           "type": "circle",
           "source": "point",
           "paint": {
-              "circle-radius": 10,
+              "circle-radius": 4,
               "circle-color": "#3887be"
           }
       });
